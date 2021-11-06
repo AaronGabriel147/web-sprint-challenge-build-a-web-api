@@ -1,43 +1,32 @@
-# Sprint Challenge Instructions
-
+## Sprint Challenge Instructions
 **Read these instructions carefully. Understand exactly what is expected _before_ starting this Sprint Challenge.**
-
 This challenge allows you to practice the concepts and techniques learned over the past sprint and apply them in a concrete project. This sprint explored **how to build web services based on the REST (REpresentational State Transfer) architectural style**. During this sprint, you studied **Node.js and Express, server side routing, how to write Express middleware and how to deploy an API to Heroku**.
-
 In your challenge this week, you will demonstrate your mastery of these skills by designing and creating a web API to manage the following resources: `Projects` and `Actions`.
-
 This is an individual assessment. All work must be your own. All projects will be submitted to Codegrade for automated review. You will also be given feedback by code reviewers the Monday after challenge submissions. For more information on the review process [click here](https://www.notion.so/lambdaschool/How-to-View-Feedback-in-CodeGrade-c5147cee220c4044a25de28bcb6bb54a).
-
 You are not allowed to collaborate during the sprint challenge.
-
 ## Introduction
-
 In meeting the minimum viable product (MVP) specifications listed below, your project should provide an API that has Create, Read, Update and Delete (CRUD) functionality for both `projects` and `actions`.
-
 ## Instructions
-
 ### Task 1: Project Set Up
-
-- [ ] Run `npm install` to install your dependencies.
-- [ ] Run tests locally executing `npm test`.
-- [ ] Reset the database to its original state executing `npm run resetdb`.
-
+- [x] Run `npm install` to install your dependencies.
+- [x] Run tests locally executing `npm test`.
+- [x] Reset the database to its original state executing `npm run resetdb`.
 ### Task 2: Project Requirements (MVP)
-
-Your finished project must include all of the following requirements:
-
 #### NPM Scripts
-
 A _"test"_ script already exists you can use to run tests against your code.
 A _"resetdb"_ script exists that allows you to reset the database to its original state.
 
 - [x] Write an _npm script_ named _"start"_ that uses `node` to run the API server.
 - [x] Write an _npm script_ named _"server"_ that uses `nodemon` to run the API server.
 - [x] Install _nodemon_ as a development dependency that would not be used in production.
-
 #### Environment Variables
-
 - [x] Bring the port number from the `process.env` variable, falling back to `9000` if `process.env.PORT` is undefined **!!!**
+
+
+
+
+
+
 
 #### Endpoints
 
@@ -81,6 +70,8 @@ Inside `api/actions/actions-router.js` build endpoints for performing CRUD opera
 - [ ] `[DELETE] /api/actions/:id`
   - Returns no response body.
   - If there is no action with the given `id` it responds with a status code 404.
+
+
 
 #### Middleware functions
 
