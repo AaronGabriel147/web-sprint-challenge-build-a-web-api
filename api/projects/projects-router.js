@@ -1,97 +1,92 @@
 const router = require('express').Router(); // Set up router.
 
 const Projects = require('./projects-model'); // Import projects model.
+// get,               // Get all projects.
+// insert,            // Insert a new project.
+// update,            // Update a project.
+// remove,            // Remove a project.
+// getProjectActions, // Get all actions for a project.
 
-
-
-`[GET] /api/projects`
-//   - Returns an array of projects as the body of the response.
-//   - If there are no projects it responds with an empty array.
-
-
-
+// Router sanity check. 
 // THIS WORKS, connected to /api/projects/ 
 // router.get('/', (req, res) => {
 //     res.send('Projects router connected.');
 // });
 
 
-// [GET] api / projects
-router.get('/', (req, res) => {
+// GET all projects.
+router.get('/', (req, res, next) => {
     Projects.get()
         .then(project => {
             res.status(200).json(project)
         })
-        .catch(err => {
-            res.status(500).json({
-                message: 'Failed to get projects.',
-                err: err.message
-            })
+        .catch(next)
+})
+
+
+// Display all actions for a project.
+router.get('/:id', (req, res, next) => {
+    const { id } = req.params;
+    Projects.get(id)
+        .then(project => {
+            res.status(200).json(project)
         })
+        .catch(next)
 })
 
 
 
 
 
+// POST a new project.
+// {
+//     "id": 2,
+//     "name": "Created with POST",
+//     "description": "xxxxxx",
+//     "completed": false
+// }
+router.post('/', (req, res, next) => {
+    Projects.insert(req.body)
+        .then(project => {
+            res.status(201).json(project)
+        })
+        .catch(next)
+})
 
 
-// router.get('/', (req, res) => {
-//     Projects.get()
-//         .then(users => {
-//             res.json(users);
-//         })
-//         .catch(err => {
-//             res.send(err);
-//         });
-// });
+// PUT an existing project.
+router.put('/:id', (req, res, next) => {
+    const { id } = req.params;
+    const changes = req.body;
+    Projects.update(id, changes)
+        .then(project => {
+            res.status(200).json(project)
+        })
+        .catch(next)
+})
 
 
+// DELETE an existing project.
+router.delete('/:id', (req, res, next) => {
+    const { id } = req.params;
+    Projects.remove(id)
+        .then(project => {
+            res.status(200).json(project)
+        })
+        .catch(next)
+})
 
-// router.get('/projects/:id', (req, res) => {
-//     Projects.get(req.params.id)
-//         .then(user => {
-//             if (user) {
-//                 res.json(user);
-//             } else {
-//                 res.status(404).json({ message: 'user not found' });
-//             }
-//         })
-//         .catch(error => console.log(error));
-// });
+
+// Display all actions for a project.
+router.get('/:id/actions', (req, res, next) => {
+    // const { id } = req.params;    //  Did it another way below for fun.
+    Projects.getProjectActions(req.params.id)
+        .then(project => {
+            res.status(200).json(project)
+        })
+        .catch(next)
+})
 
 
 
 module.exports = router // Export router.
-
-
-
-
-
-
-
-
-
-
-
-
-// Write your "projects" router here!
-// - [ ] `[GET] /api/projects`
-//   - Returns an array of projects as the body of the response.
-//   - If there are no projects it responds with an empty array.
-// - [ ] `[GET] /api/projects/:id`
-//   - Returns a project with the given `id` as the body of the response.
-//   - If there is no project with the given `id` it responds with a status code 404.
-// - [ ] `[POST] /api/projects`
-//   - Returns the newly created project as the body of the response.
-//   - If the request body is missing any of the required fields it responds with a status code 400.
-// - [ ] `[PUT] /api/projects/:id`
-//   - Returns the updated project as the body of the response.
-//   - If there is no project with the given `id` it responds with a status code 404.
-//   - If the request body is missing any of the required fields it responds with a status code 400.
-// - [ ] `[DELETE] /api/projects/:id`
-//   - Returns no response body.
-//   - If there is no project with the given `id` it responds with a status code 404.
-// - [ ] `[GET] /api/projects/:id/actions`
-//   - Returns an array of actions (could be empty) belonging to a project with the given `id`.
-//   - If there is no project with the given `id` it responds with a status code 404.
