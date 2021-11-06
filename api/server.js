@@ -4,12 +4,17 @@ const cors = require('cors');
 const morgan = require('morgan');
 
 
+const projectsRouter = require('./projects/projects-router');
+
+
 const server = express();
 
 server.use(helmet());
 server.use(cors());
 server.use(morgan('dev'));
 server.use(express.json())
+
+server.use('/api/projects', projectsRouter); // Connects to the projects router
 
 server.get('/', (req, res) => { // Sanity check to connect to browser or HTTP client.
     res.status(200).json({

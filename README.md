@@ -35,12 +35,15 @@ Inside `api/projects/projects-router.js` build the following endpoints:
 - [ ] `[GET] /api/projects`
   - Returns an array of projects as the body of the response.
   - If there are no projects it responds with an empty array.
+
 - [ ] `[GET] /api/projects/:id`
   - Returns a project with the given `id` as the body of the response.
   - If there is no project with the given `id` it responds with a status code 404.
+
 - [ ] `[POST] /api/projects`
   - Returns the newly created project as the body of the response.
   - If the request body is missing any of the required fields it responds with a status code 400.
+
 - [ ] `[PUT] /api/projects/:id`
   - Returns the updated project as the body of the response.
   - If there is no project with the given `id` it responds with a status code 404.
@@ -51,6 +54,9 @@ Inside `api/projects/projects-router.js` build the following endpoints:
 - [ ] `[GET] /api/projects/:id/actions`
   - Returns an array of actions (could be empty) belonging to a project with the given `id`.
   - If there is no project with the given `id` it responds with a status code 404.
+
+
+
 
 Inside `api/actions/actions-router.js` build endpoints for performing CRUD operations on _actions_:
 
@@ -115,8 +121,7 @@ The `projects-model.js` includes an extra method called `getProjectActions()` th
 
 We have provided test data for all the resources.
 
-**Important Notes:**
-
+## Important Notes:**
 - Do not make changes to your `package.json` except to add **additional** dependencies and scripts. Do not update existing packages.
 - Your app must be able to run in Node v.12. Do not use newer features of Node (e.g.: optional chaining and nullish coalescing NOT supported).
 - Use an HTTP client like `HTTPie`, `Postman` or `Insomnia` to manually test the API's endpoints.
