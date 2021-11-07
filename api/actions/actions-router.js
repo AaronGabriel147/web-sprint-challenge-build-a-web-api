@@ -36,6 +36,16 @@ router.get('/:id', (req, res, next) => {
 
 
 
+
+
+
+
+
+
+// - [] `[POST] /api/actions`
+//   - Returns the newly created action as the body of the response.
+//   - If the request body is missing any of the required fields it responds with a status code 400.
+
 // // POST a new action.
 // // {
 // //     "id": 2,
@@ -54,12 +64,20 @@ router.post('/', (req, res, next) => {
 })
 
 
-// - [ ] `[PUT] /api/actions/:id`
-//   - Returns the updated action as the body of the response.
-//   - If there is no action with the given `id` it responds with a status code 404.
-//   - If the request body is missing any of the required fields it responds with a status code 400.
-// // PUT an existing project.
 
+
+
+
+
+
+
+
+
+
+// PUT an existing action.
+// How to test a put request: GET data, edit data but not ID. 
+// Then put the edited data's ID in the URL, and make a put request
+// After that do a get req to see if the data is updated.
 router.put('/:id', (req, res, next) => {
     const { id } = req.params;
     const changes = req.body;
@@ -71,8 +89,11 @@ router.put('/:id', (req, res, next) => {
 })
 
 
-// - Returns no response body.
-//   - If there is no action with the given `id` it responds with a status code 404.
+
+
+// // DELETE a project.
+// How to test a delete: get all data, add the param ID to the URL, make a delete request. 
+// Then get all and see how many are left
 router.delete('/:id', (req, res, next) => {
     const { id } = req.params;
     Actions.remove(id)
@@ -87,10 +108,6 @@ router.delete('/:id', (req, res, next) => {
 module.exports = router // Export router.
 
 
-
-
-// Write your "actions" router here!
-
 // Inside `api/actions/actions-router.js` build endpoints for performing CRUD operations on _actions_:
 
 // - [x] `[GET] /api/actions`
@@ -100,16 +117,18 @@ module.exports = router // Export router.
 //   - Returns an action with the given `id` as the body of the response.
 //   - If there is no action with the given `id` it responds with a status code 404.
 
-// - [x] `[POST] /api/actions`
+// - [] `[POST] /api/actions`
 //   - Returns the newly created action as the body of the response.
 //   - If the request body is missing any of the required fields it responds with a status code 400.
+
 //   - When adding an action make sure the `project_id` provided belongs to an existing `project`.
 
-// - [x] `[PUT] /api/actions/:id`
+// - [] `[PUT] /api/actions/:id`
 //   - Returns the updated action as the body of the response.
 //   - If there is no action with the given `id` it responds with a status code 404.
+
 //   - If the request body is missing any of the required fields it responds with a status code 400.
 
-// - [ ] `[DELETE] /api/actions/:id`
+// - [] `[DELETE] /api/actions/:id`
 //   - Returns no response body.
 //   - If there is no action with the given `id` it responds with a status code 404.

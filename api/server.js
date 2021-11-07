@@ -44,12 +44,9 @@ server.use('*', (req, res, next) => {
     })
 });
 
-
 server.use(errorHandling) // will trap "".catch/500 errors" happening above
 
-
 module.exports = server;
-
 
 
 // *catch all 500 errors middleware* 
@@ -63,6 +60,8 @@ module.exports = server;
 // nothing accepts the 'next()' in any given endpoint.
 // This is the last line of defense by the server.
 
+// this is to disable eslint error for the next line
+// eslint-disable-next-line no-unused-vars  
 function errorHandling(err, req, res, next) {
     res.status(err.status || 500).json({
         message: err.message,
