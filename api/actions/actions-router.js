@@ -6,6 +6,12 @@ const Actions = require('./actions-model'); // Import actions model.
 // update, // Update a project.
 // remove, // Remove a project.
 
+
+// Import middleware.
+const { validateUser } = require('./actions-middlware'); // Validate user.
+
+
+
 // Router sanity check. 
 // THIS WORKS, connected to / api / projects /
 // router.get('/', (req, res) => {
@@ -24,27 +30,22 @@ router.get('/', (req, res, next) => {
 
 
 // Display all actions for a project.
-router.get('/:id', (req, res, next) => {
-    const { id } = req.params;
-    Actions.get(id)
-        .then(project => {
-            res.status(200).json(project)
-        })
-        .catch(next)
+router.get('/:id', validateUser, (req, res) => {
+    res.status(200).json(req.user)
 })
 
+// Before middleware:
+// router.get('/:id', (req, res, next) => {
+//     const { id } = req.params;
+//     Actions.get(id)
+//         .then(project => {
+//             res.status(200).json(project)
+//         })
+//         .catch(next)
+// })
 
 
 
-
-
-
-
-
-
-// - [] `[POST] /api/actions`
-//   - Returns the newly created action as the body of the response.
-//   - If the request body is missing any of the required fields it responds with a status code 400.
 
 // // POST a new action.
 // // {
@@ -54,22 +55,31 @@ router.get('/:id', (req, res, next) => {
 // //     "completed": false
 // // }
 
+
 router.post('/', (req, res, next) => {
     const action = req.body;
-    Actions.insert(action)
-        .then(project => {
-            res.status(201).json(project)
+    if (action.project_id && action.description && action.notes) {
+        Actions.insert(action)
+            .then(action => {
+                res.status(201).json(action)
+            })
+            .catch(next)
+    } else {
+        res.status(400).json({
+            message: "Missing required fields."
         })
-        .catch(next)
+    }
 })
 
-
-
-
-
-
-
-
+// without 400 for reference
+// router.post('/', (req, res, next) => {
+//     const action = req.body;
+//     Actions.insert(action)
+//         .then(project => {
+//             res.status(201).json(project)
+//         })
+//         .catch(next)
+// })
 
 
 
@@ -79,14 +89,35 @@ router.post('/', (req, res, next) => {
 // Then put the edited data's ID in the URL, and make a put request
 // After that do a get req to see if the data is updated.
 router.put('/:id', (req, res, next) => {
-    const { id } = req.params;
-    const changes = req.body;
-    Actions.update(id, changes)
-        .then(project => {
-            res.status(200).json(project)
+    // const { id } = req.params;
+    // const changes = req.body;
+    const action = req.body, { id } = req.params;
+
+    console.log('ACTION ---->', action); // ACTION ----> { id: 1, project_id: 1, description: '111111111111', completed: false }
+
+    if (action.project_id && action.description && action.notes) {
+        Actions.update(id, action)
+            .then(action => {
+                res.status(200).json(action)
+            })
+            .catch(next)
+    } else {
+        res.status(400).json({
+            message: "Missing required fields."
         })
-        .catch(next)
+    }
 })
+
+// without 400 for reference
+// router.put('/:id', (req, res, next) => {
+//     const { id } = req.params;
+//     const changes = req.body;
+//     Actions.update(id, changes)
+//         .then(project => {
+//             res.status(200).json(project)
+//         })
+//         .catch(next)
+// })
 
 
 
@@ -117,18 +148,16 @@ module.exports = router // Export router.
 //   - Returns an action with the given `id` as the body of the response.
 //   - If there is no action with the given `id` it responds with a status code 404.
 
-// - [] `[POST] /api/actions`
+// - [x] `[POST] /api/actions`
 //   - Returns the newly created action as the body of the response.
 //   - If the request body is missing any of the required fields it responds with a status code 400.
-
 //   - When adding an action make sure the `project_id` provided belongs to an existing `project`.
 
-// - [] `[PUT] /api/actions/:id`
+// - [x] `[PUT] /api/actions/:id`
 //   - Returns the updated action as the body of the response.
 //   - If there is no action with the given `id` it responds with a status code 404.
-
 //   - If the request body is missing any of the required fields it responds with a status code 400.
 
-// - [] `[DELETE] /api/actions/:id`
+// - [x] `[DELETE] /api/actions/:id`
 //   - Returns no response body.
 //   - If there is no action with the given `id` it responds with a status code 404.

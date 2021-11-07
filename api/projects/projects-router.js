@@ -7,6 +7,9 @@ const Projects = require('./projects-model'); // Import projects model.
 // remove,            // Remove a project.
 // getProjectActions, // Get all actions for a project.
 
+// Import middleware.
+const { validateUser } = require('./projects-middleware'); // Validate user.
+
 // Router sanity check. 
 // THIS WORKS, connected to /api/projects/ 
 // router.get('/', (req, res) => {
@@ -25,14 +28,20 @@ router.get('/', (req, res, next) => {
 
 
 // Display all actions for a project.
-router.get('/:id', (req, res, next) => {
-    const { id } = req.params;
-    Projects.get(id)
-        .then(project => {
-            res.status(200).json(project)
-        })
-        .catch(next)
+router.get('/:id', validateUser, (req, res) => {
+    res.status(200).json(req.user)
 })
+
+
+
+// router.get('/:id', (req, res, next) => {
+//     const { id } = req.params;
+//     Projects.get(id)
+//         .then(project => {
+//             res.status(200).json(project)
+//         })
+//         .catch(next)
+// })
 
 
 
@@ -42,7 +51,7 @@ router.get('/:id', (req, res, next) => {
 // If the request body is missing any of the required fields it responds with a status code 400.
 router.post('/', (req, res, next) => {
     const project = req.body;
-    if (project.name && project.description && project.completed === false || project.completed === true) {
+    if (project.name && project.description) {
         Projects.insert(project)
             .then(project => {
                 res.status(201).json(project)
@@ -62,11 +71,11 @@ router.post('/', (req, res, next) => {
 //   - If the request body is missing any of the required fields it responds with a status code 400.
 
 // PUT an existing project.
-router.put('/:id', (req, res, next) => {
+router.put('/:id', validateUser, (req, res, next) => {
     const { id } = req.params;
     const changes = req.body;
 
-    if (changes.name && changes.description && changes.completed === false || changes.completed === true) {
+    if (changes.name && changes.description) {
         Projects.update(id, changes)
             .then(project => {
                 res.status(200).json(project)
@@ -78,6 +87,25 @@ router.put('/:id', (req, res, next) => {
         })
     }
 })
+
+// Before adding middleware validateId
+// // PUT an existing project.
+// router.put('/:id', (req, res, next) => {
+//     const { id } = req.params;
+//     const changes = req.body;
+
+//     if (changes.name && changes.description) {
+//         Projects.update(id, changes)
+//             .then(project => {
+//                 res.status(200).json(project)
+//             })
+//             .catch(next)
+//     } else {
+//         res.status(400).json({
+//             message: "Missing required fields."
+//         })
+//     }
+// })
 
 
 

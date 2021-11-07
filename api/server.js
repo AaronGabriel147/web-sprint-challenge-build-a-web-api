@@ -1,4 +1,3 @@
-// Configure your server here
 // Build your actions router in /api/actions/actions-router.js
 // Build your projects router in /api/projects/projects-router.js
 // Do NOT `server.listen()` inside this file!
@@ -8,12 +7,6 @@ const helmet = require('helmet');
 const cors = require('cors');
 const morgan = require('morgan');
 
-
-const projectsRouter = require('./projects/projects-router');
-const actionsRouter = require('./actions/actions-router');
-
-
-
 const server = express();
 
 server.use(helmet());
@@ -21,7 +14,10 @@ server.use(cors());
 server.use(morgan('dev'));
 server.use(express.json())
 
+const projectsRouter = require('./projects/projects-router');
 server.use('/api/projects', projectsRouter); // Connects to the projects router
+
+const actionsRouter = require('./actions/actions-router');
 server.use('/api/actions', actionsRouter); // Connects to the actions router
 
 
@@ -68,3 +64,5 @@ function errorHandling(err, req, res, next) {
         status: 500
     })
 }
+
+
