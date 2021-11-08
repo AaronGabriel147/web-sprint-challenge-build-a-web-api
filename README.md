@@ -154,12 +154,23 @@ We have provided test data for all the resources.
 
 Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics. You might prepare by writing down your own answers before hand.
 
-1. The core features of Node.js and Express and why they are useful.
+1. ## What are the core features of Node.js and Express, and why they are useful.
+    Node.js is especially useful in web development because it is JavaScript and that is the language of the web. Without Node we would have to use another language, and that's an inconvenience because it requirs knowing another language. The Node package manager NPM contains countless packages/libraries that are crucial for web-dev. 
 
-2. Understand and explain the use of Middleware.
+    Express is a back end framework that allows for things like responses and requests to interact with each other. 
 
-3. The basic principles of the REST architectural style.
+2. ## Understand and explain the use of Middleware.
 
-4. Understand and explain the use of Express Routers.
+In express many things are middleware. routes are the most common thing in Express and they are middleware. A common example of middleware are helper functions, they are used for creating DRY code, which is another way to say less repeated lines of code.
 
-5. Describe tooling used to manually test the correctness of an API.
+3. ## The basic principles of the REST architectural style.
+
+The REST architecture used methods such as GET, POST, DELETE, and PUT. RESTful development is especially useful because it is stateless, which is better for scalability, it makes it possible to allow each request to be served by a different system.
+
+4. ## Understand and explain the use of Express Routers.
+
+Express routers are sort of like REact, in the sense that they make things more compartmentalized. Instead of having large unreadable files, we can segregate many files into folders that pertain to one topic, thus allowing for clearer code. 
+
+5. ## Describe tooling used to manually test the correctness of an API.
+
+I am not sure what this question is asking. It is either worded poorly or over my head, possibly a bit of both. I test routes in an HTTP client and I test them in the easiest way possible before testing their real world functionality that is more error prone. 
